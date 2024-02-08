@@ -110,9 +110,9 @@ pub struct BaseLexer<
 }
 
 #[derive(Debug)]
-crate struct LexerPosition {
-    crate line: Cell<isize>,
-    crate char_position_in_line: Cell<isize>,
+pub struct LexerPosition {
+    pub line: Cell<isize>,
+    pub char_position_in_line: Cell<isize>,
 }
 
 impl<'input, T, Input, TF> Deref for BaseLexer<'input, T, Input, TF>
@@ -144,19 +144,15 @@ where
     type Node = EmptyContextType<'input, TF>;
 
     fn sempred(
-        &mut self,
-        _localctx: Option<&<Self::Node as ParserNodeType<'input>>::Type>,
-        rule_index: isize,
-        action_index: isize,
+        &mut self, _localctx: Option<&<Self::Node as ParserNodeType<'input>>::Type>,
+        rule_index: isize, action_index: isize,
     ) -> bool {
         <T as Actions<'input, Self>>::sempred(_localctx, rule_index, action_index, self)
     }
 
     fn action(
-        &mut self,
-        _localctx: Option<&<Self::Node as ParserNodeType<'input>>::Type>,
-        rule_index: isize,
-        action_index: isize,
+        &mut self, _localctx: Option<&<Self::Node as ParserNodeType<'input>>::Type>,
+        rule_index: isize, action_index: isize,
     ) {
         <T as Actions<'input, Self>>::action(_localctx, rule_index, action_index, self)
     }
@@ -178,8 +174,8 @@ pub use super::token::TOKEN_DEFAULT_CHANNEL as LEXER_DEFAULT_TOKEN_CHANNEL;
 #[doc(inline)]
 pub use super::token::TOKEN_HIDDEN_CHANNEL as LEXER_HIDDEN;
 
-crate const LEXER_MIN_CHAR_VALUE: isize = 0x0000;
-crate const LEXER_MAX_CHAR_VALUE: isize = 0x10FFFF;
+pub const LEXER_MIN_CHAR_VALUE: isize = 0x0000;
+pub const LEXER_MAX_CHAR_VALUE: isize = 0x10FFFF;
 
 impl<'input, T, Input, TF> BaseLexer<'input, T, Input, TF>
 where
@@ -258,10 +254,7 @@ where
 
     /// Creates new lexer instance
     pub fn new_base_lexer(
-        input: Input,
-        interpreter: LexerATNSimulator,
-        recog: T,
-        factory: &'input TF,
+        input: Input, interpreter: LexerATNSimulator, recog: T, factory: &'input TF,
     ) -> Self {
         let mut lexer = Self {
             interpreter: Some(Box::new(interpreter)),
@@ -404,8 +397,7 @@ where
 #[inline(never)]
 fn notify_listeners<'input, T, Input, TF>(
     liseners: &mut Vec<Box<dyn ErrorListener<'input, BaseLexer<'input, T, Input, TF>>>>,
-    e: &ANTLRError,
-    lexer: &BaseLexer<'input, T, Input, TF>,
+    e: &ANTLRError, lexer: &BaseLexer<'input, T, Input, TF>,
 ) where
     T: LexerRecog<'input, BaseLexer<'input, T, Input, TF>> + 'static,
     Input: CharStream<TF::From>,
