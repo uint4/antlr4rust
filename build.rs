@@ -30,9 +30,7 @@ fn main() {
 }
 
 fn gen_for_grammar(
-    grammar_file_name: &str,
-    antlr_path: &str,
-    additional_arg: Option<&str>,
+    grammar_file_name: &str, antlr_path: &str, additional_arg: Option<&str>,
 ) -> Result<(), Box<Error>> {
     // let out_dir = env::var("OUT_DIR").unwrap();
     // let dest_path = Path::new(&out_dir);
